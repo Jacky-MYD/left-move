@@ -1,8 +1,7 @@
 /**
- * Created by 缪耀东 on 2017-7-13.
+ * Created by Jacky on 2017-7-13.
  * 用于适配苹果安卓手机左滑取消关注商品，或者删除商品
  */
-// v-leftMove="{methods:showConfirm}"
 import util from '../js/util'
    const minX = -60;
 
