@@ -6,6 +6,7 @@ import util from '../js/util'
    const minX = -60;
 
 function TouchMove(el, bind) {
+  console.log(909090, el, bind)
     this.el = el;
     this.bind = bind;
     this.startX = 0;
@@ -24,6 +25,7 @@ function TouchMove(el, bind) {
 }
 
 TouchMove.prototype.bindEvents = function() {
+  console.log(77777)
     this.unbindEvents();
     this.el.style.transform = 'translateX(0)';
     this.el.addEventListener('touchstart', this.touchstart, false);
@@ -32,6 +34,7 @@ TouchMove.prototype.bindEvents = function() {
 };
 
 TouchMove.prototype.unbindEvents = function() {
+  console.log(6666)
     this.el.style.transform = 'translateX(0)';
     this.el.removeEventListener('touchstart', this.touchstart);
     this.el.removeEventListener('touchmove', this.touchmove);
@@ -39,9 +42,11 @@ TouchMove.prototype.unbindEvents = function() {
 };
 
 TouchMove.prototype.setTransform = function(x) {
+  console.log(5555)
     this.el.style[util.prefixStyle('transform')] = 'translateX(' + x + 'px)';
 }
 TouchMove.prototype.setTransition = function(isRemove) {
+  console.log(4444)
     if (isRemove) {
         this.el.style[util.prefixStyle('transition')] = '';
     } else {
@@ -49,6 +54,7 @@ TouchMove.prototype.setTransition = function(isRemove) {
     }
 }
 TouchMove.prototype.removeActive = function() {
+  console.log(88888)
     if (this.closest) {
         let old = this.closest.querySelector('[data-touchmove-active]')
         if (old && old._touchdel) {
@@ -59,14 +65,17 @@ TouchMove.prototype.removeActive = function() {
     }
 };
 TouchMove.prototype.reset = function() {
+  console.log(99999)
     this.el.style.translateX = "0px";
 };
 function touchstart(event) {
     this.startX = event.touches[0].pageX;
     this.startY = event.touches[0].pageY;
+    console.log(111, this.startX, this.startY)
     this.setTransition(true);
 }
 function touchmove(event) {
+  console.log(222, event)
     let endX = event.touches[0].pageX,
         endY = event.touches[0].pageY,
         diffX = endX - this.startX,
@@ -83,8 +92,10 @@ function touchmove(event) {
     this.x = Math.round(temp)
     this.setTransform(this.x)
     this.startX = endX
+  console.log(222, this.x, this.startX)
 }
 function touchend(event) {
+  console.log(333, this.x)
     if (this.x < minX / 2) {
         this.x = minX;
 
