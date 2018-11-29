@@ -61,6 +61,54 @@
       this.el.removeEventListener('touchend', this.touchend);
   };
 
+当用户在移动demo节点的时候，监听横坐标的滑动距离
+function touchmove(event) {
+    let endX = event.touches[0].pageX,
+        endY = event.touches[0].pageY,
+        diffX = endX - this.startX,
+        diffY = endY - this.startY,
+        temp = this.x + diffX;
+
+    if (Math.abs(diffY) > Math.abs(diffX)) return;
+
+    if (temp > 0) {
+        temp = 0;
+    } else if (temp < minX) {
+        temp = minX;
+    }
+    this.x = Math.round(temp)
+    this.setTransform(this.x)
+    this.startX = endX
+}
+通过用户移动的距离与设定按钮宽度的一半作比较，即minX/2,
+当用户touchEnd时移动横坐标距离x < minX/2，则回弹到原始位置
+当用户touchEnd时移动横坐标距离x > minX/2，则在该demo节点添加一个样式属性'data-touchmove-active'，并且将该demo左滑置按钮的最大宽度，此时左滑成功，然后在改按钮
+添加相应的事件（删除，关注，取消关注等）
+function touchend(event) {
+    if (this.x < minX / 2) {
+        this.x = minX;
+
+        if (!this.el.dataset.touchmoveActive) {
+            this.removeActive();
+            this.el.dataset.touchmoveActive = true;
+        }
+        this.el.classList.add('test');
+    } else {
+        this.x = 0;
+        this.el.removeAttribute('data-touchmove-active');
+    }
+    this.setTransition();
+    this.setTransform(this.x);
+}
+
+上述则是完整的指令执行顺序，下面我们看看页面绑定指令
+```
+```js
+我们在注册指令的时候，有注册LeftMove这个指令，所以我们直接在页面需要左滑删除的demo节点绑定v-leftMove即可，
+然后有人就会问，为什么页面会的demo上有v-leftMove="{container: '[data-touchmove-con]'}这么一段代码，其实这里是指定该指令只监听data-touchmove-con这个集合
+中所绑定v-leftMove的元素。
+
+此处就介绍完该指令的使用方法了，有不到之处，忘见谅！
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
