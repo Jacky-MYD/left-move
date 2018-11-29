@@ -105,7 +105,7 @@ function touchend(event) {
 ```
 ```js
 我们在注册指令的时候，有注册LeftMove这个指令，所以我们直接在页面需要左滑删除的demo节点绑定v-leftMove即可，
-然后有人就会问，为什么页面会的demo上有v-leftMove="{container: '[data-touchmove-con]'}这么一段代码，其实这里是指定该指令只监听data-touchmove-con这个集合
+然后有人就会问，为什么页面会的demo上有v-leftMove="{container: '[data-touchmove-con]'}"这么一段代码，其实这里是指定该指令只监听data-touchmove-con这个集合
 中所绑定v-leftMove的元素。
 
 此处就介绍完该指令的使用方法了，有不到之处，忘见谅！
